@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class CharacterControllerScript : MonoBehaviour
 {
@@ -40,12 +40,17 @@ public class CharacterControllerScript : MonoBehaviour
     //Input
     InputMaster controls;
 
+    //Death & Checkpoint
+    public delegate void MyDelegate();
+    public event MyDelegate onDeath;
+
     private void Awake()
     {
         controls = new InputMaster();
         controls.Player.Jump.performed += context => Jump();
         controls.Player.Grab.performed += context => Grab();
         controls.Player.Movement.performed += context => Move(context.ReadValue<Vector2>());
+        controls.Player.Restart.performed += context => Restart();
 
     }
 
@@ -122,8 +127,19 @@ public class CharacterControllerScript : MonoBehaviour
     {
         if (isGrounded && !grabbed)
         {
+            Death();
             velocity.y = Mathf.Sqrt(jumpHeight * -2 * gravity);
         }
+    }
+
+    void Restart()
+    {
+        SceneManager.LoadScene("Level");
+    }
+
+    void Death()
+    {
+        onDeath.Invoke();
     }
 
     private void OnEnable()
@@ -153,15 +169,11 @@ public class CharacterControllerScript : MonoBehaviour
     }
     
     void OnTriggerEnter(Collider other)
-    {        
-        /*if (other.tag == "ButtonDoor")
-        {
-            other.GetComponent<ButtonOpenDoor>().OpenDoor();
-        }*/
-
+    {       
         if (other.tag == "ButtonMusic")
         {
             other.GetComponent<ButtonMusic>().PlaySound();
         }
     }
+
 }
