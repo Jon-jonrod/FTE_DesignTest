@@ -6,6 +6,7 @@ public class NotesController : MonoBehaviour
 {
     public int goodNoteCounter = 0;
     public FullNotes.Notes[] noteSeries;
+    private bool puzzleFinished = false;
 
     private ButtonOpenDoor openDoorScript;
 
@@ -18,18 +19,22 @@ public class NotesController : MonoBehaviour
 
     public void PressNote(int notePlayed)
     {
-        if (notePlayed == (int)noteSeries[goodNoteCounter])
+        if (!puzzleFinished)
         {
-            goodNoteCounter++;
-        } else
-        {
-            goodNoteCounter = 0;
+            if (notePlayed == (int)noteSeries[goodNoteCounter])
+            {
+                goodNoteCounter++;
+            }
+            else
+            {
+                goodNoteCounter = 0;
+            }
+            if (goodNoteCounter == 4)
+            {
+                puzzleFinished = true;
+                openDoorScript.OpenDoor();
+            }
         }
-        if (goodNoteCounter == 4)
-        {
-            openDoorScript.OpenDoor();
-        }
-
 
     }
 }
