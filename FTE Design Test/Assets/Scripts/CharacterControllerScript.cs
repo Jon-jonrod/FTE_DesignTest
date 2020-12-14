@@ -46,12 +46,13 @@ public class CharacterControllerScript : MonoBehaviour
         controls.Player.Jump.performed += context => Jump();
         controls.Player.Grab.performed += context => Grab();
         controls.Player.Movement.performed += context => Move(context.ReadValue<Vector2>());
+
     }
 
     // Update is called once per frame
     void Update()
     {
-
+        
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
         if (isGrounded)
         {
@@ -60,7 +61,7 @@ public class CharacterControllerScript : MonoBehaviour
         }
 
 
-            Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
+         Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
 
         if (direction.magnitude >= 0.1f)
         {
@@ -133,6 +134,22 @@ public class CharacterControllerScript : MonoBehaviour
     private void OnDisable()
     {
         controls.Disable();
+    }
+
+    public void EnableControls()
+    {
+        controls.Enable();
+    }
+
+    public void DisableControls()
+    {
+        controls.Disable();
+    }
+
+    public void Stop()
+    {
+        horizontal = 0;
+        vertical = 0;
     }
 
     void OnTriggerEnter(Collider other)
