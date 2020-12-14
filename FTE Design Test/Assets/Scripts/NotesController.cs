@@ -8,13 +8,12 @@ public class NotesController : MonoBehaviour
     public FullNotes.Notes[] noteSeries;
     private bool puzzleFinished = false;
 
-    private ButtonOpenDoor openDoorScript;
-
+    public StartCutsceneScript startCutscene;
     
     // Start is called before the first frame update
     void Start()
     {
-        openDoorScript = GetComponent<ButtonOpenDoor>();
+
     }
 
     public void PressNote(int notePlayed)
@@ -32,7 +31,7 @@ public class NotesController : MonoBehaviour
             if (goodNoteCounter == 4)
             {
                 puzzleFinished = true;
-                openDoorScript.OpenDoor();
+                startCutscene.StartCutscene();
             }
         }
 

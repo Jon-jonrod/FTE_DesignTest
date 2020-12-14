@@ -18,10 +18,14 @@ public class StartCutsceneScript : MonoBehaviour
     {
         if (other.tag == "Player" && !played)
         {
-            Debug.Log("PLAYYYY");
-            timeline.Play();
-            played = true;
+            StartCutscene();
         }
+    }
+
+    public void StartCutscene()
+    {
+        timeline.Play();
+        played = true;
     }
 
 }

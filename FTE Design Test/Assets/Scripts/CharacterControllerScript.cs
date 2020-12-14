@@ -151,13 +151,13 @@ public class CharacterControllerScript : MonoBehaviour
         horizontal = 0;
         vertical = 0;
     }
-
+    
     void OnTriggerEnter(Collider other)
     {        
-        if (other.tag == "ButtonDoor")
+        /*if (other.tag == "ButtonDoor")
         {
             other.GetComponent<ButtonOpenDoor>().OpenDoor();
-        }
+        }*/
 
         if (other.tag == "ButtonMusic")
         {
