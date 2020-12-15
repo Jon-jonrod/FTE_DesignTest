@@ -395,6 +395,22 @@ public class @InputMaster : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Quit"",
+                    ""type"": ""Button"",
+                    ""id"": ""e0d30ca5-b78d-41c2-989f-47b415ad3c4f"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""SlowMo"",
+                    ""type"": ""Button"",
+                    ""id"": ""1714fa35-c2f6-471e-8195-60d5fe86108d"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -417,6 +433,28 @@ public class @InputMaster : IInputActionCollection, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Checkpoint"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d6742b14-8423-4c77-abb3-3e3bd7d1dc0f"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Quit"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6a2d479b-3331-4ec7-8598-d38add97ea24"",
+                    ""path"": ""<Keyboard>/o"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SlowMo"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -462,6 +500,8 @@ public class @InputMaster : IInputActionCollection, IDisposable
         m_GameController = asset.FindActionMap("GameController", throwIfNotFound: true);
         m_GameController_Restart = m_GameController.FindAction("Restart", throwIfNotFound: true);
         m_GameController_Checkpoint = m_GameController.FindAction("Checkpoint", throwIfNotFound: true);
+        m_GameController_Quit = m_GameController.FindAction("Quit", throwIfNotFound: true);
+        m_GameController_SlowMo = m_GameController.FindAction("SlowMo", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -562,12 +602,16 @@ public class @InputMaster : IInputActionCollection, IDisposable
     private IGameControllerActions m_GameControllerActionsCallbackInterface;
     private readonly InputAction m_GameController_Restart;
     private readonly InputAction m_GameController_Checkpoint;
+    private readonly InputAction m_GameController_Quit;
+    private readonly InputAction m_GameController_SlowMo;
     public struct GameControllerActions
     {
         private @InputMaster m_Wrapper;
         public GameControllerActions(@InputMaster wrapper) { m_Wrapper = wrapper; }
         public InputAction @Restart => m_Wrapper.m_GameController_Restart;
         public InputAction @Checkpoint => m_Wrapper.m_GameController_Checkpoint;
+        public InputAction @Quit => m_Wrapper.m_GameController_Quit;
+        public InputAction @SlowMo => m_Wrapper.m_GameController_SlowMo;
         public InputActionMap Get() { return m_Wrapper.m_GameController; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -583,6 +627,12 @@ public class @InputMaster : IInputActionCollection, IDisposable
                 @Checkpoint.started -= m_Wrapper.m_GameControllerActionsCallbackInterface.OnCheckpoint;
                 @Checkpoint.performed -= m_Wrapper.m_GameControllerActionsCallbackInterface.OnCheckpoint;
                 @Checkpoint.canceled -= m_Wrapper.m_GameControllerActionsCallbackInterface.OnCheckpoint;
+                @Quit.started -= m_Wrapper.m_GameControllerActionsCallbackInterface.OnQuit;
+                @Quit.performed -= m_Wrapper.m_GameControllerActionsCallbackInterface.OnQuit;
+                @Quit.canceled -= m_Wrapper.m_GameControllerActionsCallbackInterface.OnQuit;
+                @SlowMo.started -= m_Wrapper.m_GameControllerActionsCallbackInterface.OnSlowMo;
+                @SlowMo.performed -= m_Wrapper.m_GameControllerActionsCallbackInterface.OnSlowMo;
+                @SlowMo.canceled -= m_Wrapper.m_GameControllerActionsCallbackInterface.OnSlowMo;
             }
             m_Wrapper.m_GameControllerActionsCallbackInterface = instance;
             if (instance != null)
@@ -593,6 +643,12 @@ public class @InputMaster : IInputActionCollection, IDisposable
                 @Checkpoint.started += instance.OnCheckpoint;
                 @Checkpoint.performed += instance.OnCheckpoint;
                 @Checkpoint.canceled += instance.OnCheckpoint;
+                @Quit.started += instance.OnQuit;
+                @Quit.performed += instance.OnQuit;
+                @Quit.canceled += instance.OnQuit;
+                @SlowMo.started += instance.OnSlowMo;
+                @SlowMo.performed += instance.OnSlowMo;
+                @SlowMo.canceled += instance.OnSlowMo;
             }
         }
     }
@@ -625,5 +681,7 @@ public class @InputMaster : IInputActionCollection, IDisposable
     {
         void OnRestart(InputAction.CallbackContext context);
         void OnCheckpoint(InputAction.CallbackContext context);
+        void OnQuit(InputAction.CallbackContext context);
+        void OnSlowMo(InputAction.CallbackContext context);
     }
 }

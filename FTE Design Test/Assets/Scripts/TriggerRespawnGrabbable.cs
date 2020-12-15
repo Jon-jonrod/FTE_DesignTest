@@ -9,7 +9,8 @@ public class TriggerRespawnGrabbable : MonoBehaviour
     {
         if (other.tag == "Grabbable")
         {
-            other.GetComponent<RespawnController>().OnRespawn();
+            if (other.GetComponent<RespawnController>()!=null)
+                other.GetComponent<RespawnController>().OnRespawn();
         }
     }
 }

@@ -30,6 +30,8 @@ public class CheckpointController : MonoBehaviour
         controls = characterControllerScript.getControls();
         controls.GameController.Restart.performed += context => Restart();
         controls.GameController.Checkpoint.performed += context => GoToCheckpoint();
+        controls.GameController.Quit.performed += context => Exit();
+        controls.GameController.SlowMo.performed += context => SlowMo();
 
         currentCam = firstCamera;
         OnCharacterDeath();
@@ -58,6 +60,14 @@ public class CheckpointController : MonoBehaviour
        
     }
 
+    public void SlowMo()
+    {
+        if (Time.timeScale == 1)
+            Time.timeScale = 0.1f;
+        else
+            Time.timeScale = 1;
+    }
+
     IEnumerator WaitCam(CinemachineVirtualCamera cam, float waitTime = 0.02f)
     {
         yield return new WaitForSeconds(waitTime);
@@ -67,6 +77,11 @@ public class CheckpointController : MonoBehaviour
     public void Restart()
     {
         SceneManager.LoadScene("Level");
+    }
+
+    public void Exit()
+    {
+        Application.Quit();
     }
 
     void GoToCheckpoint()

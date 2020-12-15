@@ -14,6 +14,7 @@ public class CharacterControllerScript : MonoBehaviour
     public float speed = 6f;
     public float turnSmoothTime = 0.1f;
     float turnSmoothVelocity;
+    Vector3 direction;
 
     //Variables for jump
     public LayerMask groundMask;
@@ -34,7 +35,7 @@ public class CharacterControllerScript : MonoBehaviour
     public bool grabbed;
     RaycastHit hit;
     public float distance = 2f;
-    public Transform destinationGrab, originGrab;
+    public Transform destinationGrab, originGrab, originGrab2;
     public LayerMask grabbableMask;
 
     //Input
@@ -68,7 +69,7 @@ public class CharacterControllerScript : MonoBehaviour
             }
 
 
-            Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
+            direction = new Vector3(horizontal, 0f, vertical).normalized;
 
             if (direction.magnitude >= 0.1f)
             {
@@ -76,14 +77,14 @@ public class CharacterControllerScript : MonoBehaviour
                 float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
                 transform.rotation = Quaternion.Euler(0f, angle, 0f);
 
-                Vector3 movDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
-                controller.Move(movDir.normalized * speed * Time.deltaTime);
 
+                Vector3 movDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
+
+                controller.Move(movDir.normalized * speed * Time.deltaTime);
 
             }
 
             Debug.DrawRay(originGrab.transform.position, transform.TransformDirection(Vector3.forward) * distance, Color.yellow);
-
 
             velocity.y += gravity * Time.deltaTime;
             controller.Move(velocity * Time.deltaTime);
@@ -101,7 +102,8 @@ public class CharacterControllerScript : MonoBehaviour
     {
         if (!grabbed)
         {
-            if (Physics.Raycast(originGrab.transform.position, transform.TransformDirection(Vector3.forward), out hit, distance, grabbableMask))
+            if (Physics.Raycast(originGrab.transform.position, transform.TransformDirection(Vector3.forward), out hit, distance, grabbableMask) ||
+                Physics.Raycast(originGrab2.transform.position, transform.TransformDirection(Vector3.forward), out hit, distance, grabbableMask))
             {
                 if (hit.collider != null && hit.collider.tag == "Grabbable")
                 {
@@ -183,6 +185,8 @@ public class CharacterControllerScript : MonoBehaviour
         {
             Death();
         }
+
+        
     }
 
     public InputMaster getControls()

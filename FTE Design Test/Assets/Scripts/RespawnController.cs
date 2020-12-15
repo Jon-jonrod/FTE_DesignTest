@@ -7,6 +7,10 @@ public class RespawnController : MonoBehaviour
     public event MyDelegate onRespawn;
     Vector3 spawnPosition;
     Quaternion spawnRotation;
+
+    public Vector3 alternativePos;
+    public bool useAlternativePos=false;
+
     void Awake()
     {
         characterControllerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<CharacterControllerScript>();
@@ -16,6 +20,9 @@ public class RespawnController : MonoBehaviour
     }
     public void OnRespawn()
     {
+       
+        if (useAlternativePos)
+            spawnPosition = alternativePos;
         transform.localPosition = spawnPosition;
         transform.localRotation = spawnRotation;
         if (name == "BadGuy")

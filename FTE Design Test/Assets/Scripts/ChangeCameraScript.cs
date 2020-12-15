@@ -6,14 +6,14 @@ using Cinemachine;
 public class ChangeCameraScript : MonoBehaviour
 {
     public CinemachineVirtualCamera camera1, camera2;
-
+    public float timeDelay=0;
    
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Player")
         {
-            ChangeCam();
+            Invoke("ChangeCam", timeDelay);
         }
     }
 
