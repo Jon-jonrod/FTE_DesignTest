@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Cinemachine;
 
 public class CharacterControllerScript : MonoBehaviour
 {
@@ -43,6 +44,7 @@ public class CharacterControllerScript : MonoBehaviour
     //Death & Checkpoint
     public delegate void MyDelegate();
     public event MyDelegate onDeath;
+    private bool dead;
 
     private void Awake()
     {
@@ -57,36 +59,37 @@ public class CharacterControllerScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
-        isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
-        if (isGrounded)
+        if (!dead)
         {
-            if (velocity.y < 0)
-                velocity.y = -2f;
+            isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
+            if (isGrounded)
+            {
+                if (velocity.y < 0)
+                    velocity.y = -2f;
+            }
+
+
+            Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
+
+            if (direction.magnitude >= 0.1f)
+            {
+                float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + cam.eulerAngles.y;
+                float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
+                transform.rotation = Quaternion.Euler(0f, angle, 0f);
+
+                Vector3 movDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
+                controller.Move(movDir.normalized * speed * Time.deltaTime);
+
+
+            }
+
+            Debug.DrawRay(originGrab.transform.position, transform.TransformDirection(Vector3.forward) * distance, Color.yellow);
+
+
+            velocity.y += gravity * Time.deltaTime;
+            controller.Move(velocity * Time.deltaTime);
+
         }
-
-
-         Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
-
-        if (direction.magnitude >= 0.1f)
-        {
-            float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + cam.eulerAngles.y;
-            float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
-            transform.rotation = Quaternion.Euler(0f, angle, 0f);
-
-            Vector3 movDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
-            controller.Move(movDir.normalized * speed * Time.deltaTime);
-
-
-        }
-
-        Debug.DrawRay(originGrab.transform.position, transform.TransformDirection(Vector3.forward) * distance, Color.yellow);
-
-
-        velocity.y += gravity * Time.deltaTime;
-        controller.Move(velocity * Time.deltaTime);
-
-
     }
 
     void Move(Vector2 direction)
@@ -123,11 +126,10 @@ public class CharacterControllerScript : MonoBehaviour
 
     }
 
-    void Jump()
+    public void Jump()
     {
         if (isGrounded && !grabbed)
         {
-            Death();
             velocity.y = Mathf.Sqrt(jumpHeight * -2 * gravity);
         }
     }
@@ -139,7 +141,14 @@ public class CharacterControllerScript : MonoBehaviour
 
     void Death()
     {
+        dead = true;
         onDeath.Invoke();
+        Invoke("WaitDeath", 1);
+    }
+
+    void WaitDeath()
+    {
+        dead = false;
     }
 
     private void OnEnable()
@@ -162,6 +171,7 @@ public class CharacterControllerScript : MonoBehaviour
         controls.Disable();
     }
 
+
     public void Stop()
     {
         horizontal = 0;
@@ -173,6 +183,11 @@ public class CharacterControllerScript : MonoBehaviour
         if (other.tag == "ButtonMusic")
         {
             other.GetComponent<ButtonMusic>().PlaySound();
+        }
+
+        if (other.tag == "Death")
+        {
+            Death();
         }
     }
 

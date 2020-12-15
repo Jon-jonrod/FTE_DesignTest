@@ -28,4 +28,9 @@ public class StartCutsceneScript : MonoBehaviour
         played = true;
     }
 
+    public void Reset()
+    {
+        played = false;
+    }
+
 }

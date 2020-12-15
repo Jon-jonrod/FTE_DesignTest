@@ -6,7 +6,8 @@ TagManager:
   tags:
   - Grabbable
   - ButtonMusic
-  - ButtonDoor
+  - Death
+  - VirtualCamera
   layers:
   - Default
   - TransparentFX

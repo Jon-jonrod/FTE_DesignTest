@@ -5,18 +5,25 @@ public class RespawnController : MonoBehaviour
     private CharacterControllerScript characterControllerScript;
     public delegate void MyDelegate();
     public event MyDelegate onRespawn;
-    Vector3 initialPosition;
-    Quaternion initialRotation;
+    Vector3 spawnPosition;
+    Quaternion spawnRotation;
     void Awake()
     {
         characterControllerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<CharacterControllerScript>();
-        initialPosition = transform.position;
-        initialRotation = transform.rotation;
+        spawnPosition = transform.position;
+        spawnRotation = transform.rotation;
         characterControllerScript.onDeath += OnRespawn;
     }
     public void OnRespawn()
     {
-        transform.position = initialPosition;
+        transform.position = spawnPosition;
+        transform.rotation = spawnRotation;
         //onRespawn();
+    }
+
+    public void SetNewSpawn(Vector3 pos, Quaternion rot)
+    {
+        spawnPosition = pos;
+        spawnRotation = rot;
     }
 }

@@ -5,7 +5,7 @@ using Cinemachine;
 
 public class ChangeCameraScript : MonoBehaviour
 {
-    public CinemachineVirtualCamera firstCamera, newCamera;
+    public CinemachineVirtualCamera camera1, camera2;
 
    
 
@@ -19,6 +19,10 @@ public class ChangeCameraScript : MonoBehaviour
 
     private void ChangeCam()
     {
-        newCamera.Priority = firstCamera.Priority + 1;
+
+        if (camera2.Priority > camera1.Priority)
+            camera1.Priority = camera2.Priority + 1;
+        else camera2.Priority = camera1.Priority + 1;
+
     }
 }
