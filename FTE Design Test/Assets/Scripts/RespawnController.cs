@@ -18,6 +18,15 @@ public class RespawnController : MonoBehaviour
     {
         transform.position = spawnPosition;
         transform.rotation = spawnRotation;
+        if (name == "BadGuy")
+        {
+            GetComponent<BossChaseController>().Reset();
+        }
+
+        if (name == "PlaneDeath")
+        {
+            gameObject.SetActive(false);
+        }
         //onRespawn();
     }
 

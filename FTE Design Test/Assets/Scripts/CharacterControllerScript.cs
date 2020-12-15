@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using Cinemachine;
 
 public class CharacterControllerScript : MonoBehaviour
@@ -52,7 +51,7 @@ public class CharacterControllerScript : MonoBehaviour
         controls.Player.Jump.performed += context => Jump();
         controls.Player.Grab.performed += context => Grab();
         controls.Player.Movement.performed += context => Move(context.ReadValue<Vector2>());
-        controls.Player.Restart.performed += context => Restart();
+       
 
     }
 
@@ -134,12 +133,7 @@ public class CharacterControllerScript : MonoBehaviour
         }
     }
 
-    void Restart()
-    {
-        SceneManager.LoadScene("Level");
-    }
-
-    void Death()
+    public void Death()
     {
         dead = true;
         onDeath.Invoke();

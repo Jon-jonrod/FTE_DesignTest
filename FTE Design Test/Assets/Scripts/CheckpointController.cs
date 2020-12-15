@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
+using UnityEngine.SceneManagement;
 
 public class CheckpointController : MonoBehaviour
 {
@@ -10,6 +11,18 @@ public class CheckpointController : MonoBehaviour
 
     private CharacterControllerScript characterControllerScript;
 
+    private int numCheckpoint=0;
+
+    //Input
+    InputMaster controls;
+
+    private void Awake()
+    {
+        controls = new InputMaster();
+        controls.GameController.Restart.performed += context => Restart();
+        currentCam = firstCamera;
+        OnCharacterDeath();
+    }
 
     private void Start()
     {
@@ -17,11 +30,12 @@ public class CheckpointController : MonoBehaviour
         characterControllerScript.onDeath += OnCharacterDeath;
     }
 
-    public void SetTransformSpawn(CinemachineVirtualCamera activeCamera=null)
+    public void NewCheckpoint(int numCheckpointPassed, CinemachineVirtualCamera activeCamera = null)
     {
+        numCheckpoint=numCheckpointPassed;
         if (activeCamera == null)
             activeCamera = firstCamera;
-       
+
         currentCam = activeCamera;
     }
 
@@ -32,7 +46,17 @@ public class CheckpointController : MonoBehaviour
             CinemachineVirtualCamera virtualCam = cam.GetComponent<CinemachineVirtualCamera>();
             if (virtualCam != currentCam)
                 virtualCam.Priority = 10;
-            else virtualCam.Priority = 20;
+            else
+            {
+                virtualCam.Priority = 20;
+            }
         }
+    }
+
+    void Restart()
+    {
+        if (numCheckpoint == 0)
+            SceneManager.LoadScene("Level");
+        else characterControllerScript.Death();
     }
 }

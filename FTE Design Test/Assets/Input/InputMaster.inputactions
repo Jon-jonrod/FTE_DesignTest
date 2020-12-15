@@ -28,14 +28,6 @@
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
-                },
-                {
-                    "name": "Restart",
-                    "type": "Button",
-                    "id": "cad7b12c-3e4a-45d4-8285-f9b8eedc470d",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": ""
                 }
             ],
             "bindings": [
@@ -368,10 +360,26 @@
                     "action": "Grab",
                     "isComposite": false,
                     "isPartOfComposite": false
-                },
+                }
+            ]
+        },
+        {
+            "name": "GameController",
+            "id": "6a0aab2a-dbcb-4958-85b2-8e35ed07b5f7",
+            "actions": [
+                {
+                    "name": "Restart",
+                    "type": "Button",
+                    "id": "476785d0-715d-4c8b-9e71-fbb351441b51",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                }
+            ],
+            "bindings": [
                 {
                     "name": "",
-                    "id": "7e6b3fb1-bbdc-43fe-8c82-11119d216f8b",
+                    "id": "24530f51-8efc-4658-86f5-5693130121ff",
                     "path": "<Keyboard>/r",
                     "interactions": "",
                     "processors": "",

@@ -15,6 +15,8 @@ public class Checkpoint : MonoBehaviour
     
     public GameObject[] cutsceneToAffect;
 
+    public int numCheckpoint = 1;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -42,7 +44,7 @@ public class Checkpoint : MonoBehaviour
             RespawnController charaRespawn = other.GetComponent<RespawnController>();
             characterScript.onDeath += OnCharacterDeath;
             charaRespawn.SetNewSpawn(other.transform.position, other.transform.rotation);
-            checkpointController.SetTransformSpawn(activeCamera);
+            checkpointController.NewCheckpoint(numCheckpoint, activeCamera);
         }
     }
 

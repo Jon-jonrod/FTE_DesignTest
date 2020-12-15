@@ -4,5 +4,5 @@ using UnityEngine;
 
 public class FullNotes
 {
-    public enum Notes { C, Cflat, D, Dflat, E, F, Fflat, G, Gflat, A, Aflat, B }
+    public enum Notes { C, CSharp, D, DSharp, E, F, FSharp, G, GSharp, A, ASharp, B }
 }

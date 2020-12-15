@@ -41,14 +41,6 @@ public class @InputMaster : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
-                },
-                {
-                    ""name"": ""Restart"",
-                    ""type"": ""Button"",
-                    ""id"": ""cad7b12c-3e4a-45d4-8285-f9b8eedc470d"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -381,10 +373,26 @@ public class @InputMaster : IInputActionCollection, IDisposable
                     ""action"": ""Grab"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
-                },
+                }
+            ]
+        },
+        {
+            ""name"": ""GameController"",
+            ""id"": ""6a0aab2a-dbcb-4958-85b2-8e35ed07b5f7"",
+            ""actions"": [
+                {
+                    ""name"": ""Restart"",
+                    ""type"": ""Button"",
+                    ""id"": ""476785d0-715d-4c8b-9e71-fbb351441b51"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                }
+            ],
+            ""bindings"": [
                 {
                     ""name"": """",
-                    ""id"": ""7e6b3fb1-bbdc-43fe-8c82-11119d216f8b"",
+                    ""id"": ""24530f51-8efc-4658-86f5-5693130121ff"",
                     ""path"": ""<Keyboard>/r"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -431,7 +439,9 @@ public class @InputMaster : IInputActionCollection, IDisposable
         m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
         m_Player_Movement = m_Player.FindAction("Movement", throwIfNotFound: true);
         m_Player_Grab = m_Player.FindAction("Grab", throwIfNotFound: true);
-        m_Player_Restart = m_Player.FindAction("Restart", throwIfNotFound: true);
+        // GameController
+        m_GameController = asset.FindActionMap("GameController", throwIfNotFound: true);
+        m_GameController_Restart = m_GameController.FindAction("Restart", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -484,7 +494,6 @@ public class @InputMaster : IInputActionCollection, IDisposable
     private readonly InputAction m_Player_Jump;
     private readonly InputAction m_Player_Movement;
     private readonly InputAction m_Player_Grab;
-    private readonly InputAction m_Player_Restart;
     public struct PlayerActions
     {
         private @InputMaster m_Wrapper;
@@ -492,7 +501,6 @@ public class @InputMaster : IInputActionCollection, IDisposable
         public InputAction @Jump => m_Wrapper.m_Player_Jump;
         public InputAction @Movement => m_Wrapper.m_Player_Movement;
         public InputAction @Grab => m_Wrapper.m_Player_Grab;
-        public InputAction @Restart => m_Wrapper.m_Player_Restart;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -511,9 +519,6 @@ public class @InputMaster : IInputActionCollection, IDisposable
                 @Grab.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnGrab;
                 @Grab.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnGrab;
                 @Grab.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnGrab;
-                @Restart.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRestart;
-                @Restart.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRestart;
-                @Restart.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRestart;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -527,13 +532,43 @@ public class @InputMaster : IInputActionCollection, IDisposable
                 @Grab.started += instance.OnGrab;
                 @Grab.performed += instance.OnGrab;
                 @Grab.canceled += instance.OnGrab;
+            }
+        }
+    }
+    public PlayerActions @Player => new PlayerActions(this);
+
+    // GameController
+    private readonly InputActionMap m_GameController;
+    private IGameControllerActions m_GameControllerActionsCallbackInterface;
+    private readonly InputAction m_GameController_Restart;
+    public struct GameControllerActions
+    {
+        private @InputMaster m_Wrapper;
+        public GameControllerActions(@InputMaster wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Restart => m_Wrapper.m_GameController_Restart;
+        public InputActionMap Get() { return m_Wrapper.m_GameController; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(GameControllerActions set) { return set.Get(); }
+        public void SetCallbacks(IGameControllerActions instance)
+        {
+            if (m_Wrapper.m_GameControllerActionsCallbackInterface != null)
+            {
+                @Restart.started -= m_Wrapper.m_GameControllerActionsCallbackInterface.OnRestart;
+                @Restart.performed -= m_Wrapper.m_GameControllerActionsCallbackInterface.OnRestart;
+                @Restart.canceled -= m_Wrapper.m_GameControllerActionsCallbackInterface.OnRestart;
+            }
+            m_Wrapper.m_GameControllerActionsCallbackInterface = instance;
+            if (instance != null)
+            {
                 @Restart.started += instance.OnRestart;
                 @Restart.performed += instance.OnRestart;
                 @Restart.canceled += instance.OnRestart;
             }
         }
     }
-    public PlayerActions @Player => new PlayerActions(this);
+    public GameControllerActions @GameController => new GameControllerActions(this);
     private int m_KeyboardAndMouseSchemeIndex = -1;
     public InputControlScheme KeyboardAndMouseScheme
     {
@@ -557,6 +592,9 @@ public class @InputMaster : IInputActionCollection, IDisposable
         void OnJump(InputAction.CallbackContext context);
         void OnMovement(InputAction.CallbackContext context);
         void OnGrab(InputAction.CallbackContext context);
+    }
+    public interface IGameControllerActions
+    {
         void OnRestart(InputAction.CallbackContext context);
     }
 }
