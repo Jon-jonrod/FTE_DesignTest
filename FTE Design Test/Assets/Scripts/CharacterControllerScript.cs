@@ -117,7 +117,7 @@ public class CharacterControllerScript : MonoBehaviour
         else
         {
             grabbed = false;
-            hit.collider.transform.parent = GameObject.Find("GrabbablesObjects").transform;
+            hit.collider.transform.parent = GameObject.Find("GrabbableObjects").transform;
             hit.collider.GetComponent<Rigidbody>().useGravity = true;
             hit.collider.GetComponent<Rigidbody>().isKinematic = false;
         }

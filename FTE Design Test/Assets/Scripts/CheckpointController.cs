@@ -64,7 +64,7 @@ public class CheckpointController : MonoBehaviour
         cam.Priority = 20;
     }
 
-    void Restart()
+    public void Restart()
     {
         SceneManager.LoadScene("Level");
     }
