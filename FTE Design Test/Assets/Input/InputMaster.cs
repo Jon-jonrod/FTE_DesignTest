@@ -378,12 +378,20 @@ public class @InputMaster : IInputActionCollection, IDisposable
         },
         {
             ""name"": ""GameController"",
-            ""id"": ""6a0aab2a-dbcb-4958-85b2-8e35ed07b5f7"",
+            ""id"": ""11762991-9607-4957-9294-c67cb0b5a4ba"",
             ""actions"": [
                 {
                     ""name"": ""Restart"",
                     ""type"": ""Button"",
-                    ""id"": ""476785d0-715d-4c8b-9e71-fbb351441b51"",
+                    ""id"": ""4d9170d4-c9c3-40f7-897b-b092acf0bf88"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""Checkpoint"",
+                    ""type"": ""Button"",
+                    ""id"": ""7285c91b-0bfe-4a88-bece-359ac013f5f2"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
@@ -392,12 +400,23 @@ public class @InputMaster : IInputActionCollection, IDisposable
             ""bindings"": [
                 {
                     ""name"": """",
-                    ""id"": ""24530f51-8efc-4658-86f5-5693130121ff"",
+                    ""id"": ""eadad009-49a0-4a93-889f-469e09a86a91"",
                     ""path"": ""<Keyboard>/r"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Restart"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7515d43e-3665-4932-bf82-c07a1b42b662"",
+                    ""path"": ""<Keyboard>/u"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Checkpoint"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -442,6 +461,7 @@ public class @InputMaster : IInputActionCollection, IDisposable
         // GameController
         m_GameController = asset.FindActionMap("GameController", throwIfNotFound: true);
         m_GameController_Restart = m_GameController.FindAction("Restart", throwIfNotFound: true);
+        m_GameController_Checkpoint = m_GameController.FindAction("Checkpoint", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -541,11 +561,13 @@ public class @InputMaster : IInputActionCollection, IDisposable
     private readonly InputActionMap m_GameController;
     private IGameControllerActions m_GameControllerActionsCallbackInterface;
     private readonly InputAction m_GameController_Restart;
+    private readonly InputAction m_GameController_Checkpoint;
     public struct GameControllerActions
     {
         private @InputMaster m_Wrapper;
         public GameControllerActions(@InputMaster wrapper) { m_Wrapper = wrapper; }
         public InputAction @Restart => m_Wrapper.m_GameController_Restart;
+        public InputAction @Checkpoint => m_Wrapper.m_GameController_Checkpoint;
         public InputActionMap Get() { return m_Wrapper.m_GameController; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -558,6 +580,9 @@ public class @InputMaster : IInputActionCollection, IDisposable
                 @Restart.started -= m_Wrapper.m_GameControllerActionsCallbackInterface.OnRestart;
                 @Restart.performed -= m_Wrapper.m_GameControllerActionsCallbackInterface.OnRestart;
                 @Restart.canceled -= m_Wrapper.m_GameControllerActionsCallbackInterface.OnRestart;
+                @Checkpoint.started -= m_Wrapper.m_GameControllerActionsCallbackInterface.OnCheckpoint;
+                @Checkpoint.performed -= m_Wrapper.m_GameControllerActionsCallbackInterface.OnCheckpoint;
+                @Checkpoint.canceled -= m_Wrapper.m_GameControllerActionsCallbackInterface.OnCheckpoint;
             }
             m_Wrapper.m_GameControllerActionsCallbackInterface = instance;
             if (instance != null)
@@ -565,6 +590,9 @@ public class @InputMaster : IInputActionCollection, IDisposable
                 @Restart.started += instance.OnRestart;
                 @Restart.performed += instance.OnRestart;
                 @Restart.canceled += instance.OnRestart;
+                @Checkpoint.started += instance.OnCheckpoint;
+                @Checkpoint.performed += instance.OnCheckpoint;
+                @Checkpoint.canceled += instance.OnCheckpoint;
             }
         }
     }
@@ -596,5 +624,6 @@ public class @InputMaster : IInputActionCollection, IDisposable
     public interface IGameControllerActions
     {
         void OnRestart(InputAction.CallbackContext context);
+        void OnCheckpoint(InputAction.CallbackContext context);
     }
 }

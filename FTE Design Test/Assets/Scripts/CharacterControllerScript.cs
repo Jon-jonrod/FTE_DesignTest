@@ -117,7 +117,7 @@ public class CharacterControllerScript : MonoBehaviour
         else
         {
             grabbed = false;
-            hit.collider.transform.parent = null;
+            hit.collider.transform.parent = GameObject.Find("GrabbablesObjects").transform;
             hit.collider.GetComponent<Rigidbody>().useGravity = true;
             hit.collider.GetComponent<Rigidbody>().isKinematic = false;
         }
@@ -137,7 +137,7 @@ public class CharacterControllerScript : MonoBehaviour
     {
         dead = true;
         onDeath.Invoke();
-        Invoke("WaitDeath", 1);
+        Invoke("WaitDeath", 0.5f);
     }
 
     void WaitDeath()
@@ -183,6 +183,11 @@ public class CharacterControllerScript : MonoBehaviour
         {
             Death();
         }
+    }
+
+    public InputMaster getControls()
+    {
+        return controls;
     }
 
 }

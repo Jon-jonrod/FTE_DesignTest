@@ -16,15 +16,14 @@ public class BossChaseController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (moving)
+        if (moving && Vector3.Distance(wayPoints[current].transform.position, transform.position) < radiusDetection)
         {
-            if (Vector3.Distance(wayPoints[current].transform.position, transform.position) < radiusDetection)
-            {
             current++;
             if (current == wayPoints.Length)
                 moving = false;
-            }
-        
+        }
+        if (moving)
+        {
             transform.position = Vector3.MoveTowards(transform.position, wayPoints[current].transform.position, Time.deltaTime * speed);
 
             //newDirection = Vector3.RotateTowards(transform.forward, wayPoints[current].transform.position - transform.position, rotSpeed * Time.deltaTime, 0.0f);

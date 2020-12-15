@@ -10,14 +10,14 @@ public class RespawnController : MonoBehaviour
     void Awake()
     {
         characterControllerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<CharacterControllerScript>();
-        spawnPosition = transform.position;
-        spawnRotation = transform.rotation;
+        spawnPosition = transform.localPosition;
+        spawnRotation = transform.localRotation;
         characterControllerScript.onDeath += OnRespawn;
     }
     public void OnRespawn()
     {
-        transform.position = spawnPosition;
-        transform.rotation = spawnRotation;
+        transform.localPosition = spawnPosition;
+        transform.localRotation = spawnRotation;
         if (name == "BadGuy")
         {
             GetComponent<BossChaseController>().Reset();
@@ -30,7 +30,7 @@ public class RespawnController : MonoBehaviour
         //onRespawn();
     }
 
-    public void SetNewSpawn(Vector3 pos, Quaternion rot)
+    public void SetNewSpawn(Vector3 pos, Quaternion rot=new Quaternion())
     {
         spawnPosition = pos;
         spawnRotation = rot;
