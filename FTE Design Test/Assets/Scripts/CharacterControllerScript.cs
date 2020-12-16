@@ -108,10 +108,13 @@ public class CharacterControllerScript : MonoBehaviour
                 if (hit.collider != null && hit.collider.tag == "Grabbable")
                 {
                     grabbed = true;
-                    hit.collider.GetComponent<Rigidbody>().useGravity = false;
-                    hit.collider.GetComponent<Rigidbody>().isKinematic = true;
-                    hit.collider.transform.position = destinationGrab.position;
-                    hit.collider.transform.parent = destinationGrab;
+                    hit.collider.transform.position = new Vector3(destinationGrab.position.x, hit.collider.transform.position.y, destinationGrab.position.z);
+                    hit.collider.transform.parent = transform;
+                    hit.collider.GetComponent<GrabbableScript>().SetGrabbed(true);
+                    if (hit.collider.GetComponent<Rigidbody>() != null)
+                    {
+                        hit.collider.GetComponent<Rigidbody>().useGravity = false;
+                    }
 
                 }
             }
@@ -120,11 +123,19 @@ public class CharacterControllerScript : MonoBehaviour
         {
             grabbed = false;
             hit.collider.transform.parent = GameObject.Find("GrabbableObjects").transform;
-            hit.collider.GetComponent<Rigidbody>().useGravity = true;
-            hit.collider.GetComponent<Rigidbody>().isKinematic = false;
+            hit.collider.GetComponent<GrabbableScript>().SetGrabbed(false);
+            if (hit.collider.GetComponent<Rigidbody>() != null)
+            {
+                hit.collider.GetComponent<Rigidbody>().useGravity = true;
+            }
         }
 
 
+    }
+
+    public void SetGrabbed(bool value)
+    {
+        grabbed = value;
     }
 
     public void Jump()

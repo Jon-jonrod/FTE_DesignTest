@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class TriggerRespawnGrabbable : MonoBehaviour
 {
+    public Transform newSpawn;
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Grabbable")
         {
-            if (other.GetComponent<RespawnController>()!=null)
-                other.GetComponent<RespawnController>().OnRespawn();
+            other.transform.position = newSpawn.position;
         }
     }
 }

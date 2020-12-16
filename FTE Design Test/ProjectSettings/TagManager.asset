@@ -8,6 +8,7 @@ TagManager:
   - ButtonMusic
   - Death
   - VirtualCamera
+  - Checkpoint
   layers:
   - Default
   - TransparentFX

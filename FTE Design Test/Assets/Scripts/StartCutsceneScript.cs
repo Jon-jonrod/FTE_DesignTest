@@ -30,6 +30,7 @@ public class StartCutsceneScript : MonoBehaviour
 
     public void Reset()
     {
+        Debug.Log(name);
         played = false;
     }
 

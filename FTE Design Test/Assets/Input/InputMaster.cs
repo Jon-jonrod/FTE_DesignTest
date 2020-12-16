@@ -80,7 +80,7 @@ public class @InputMaster : IInputActionCollection, IDisposable
                 {
                     ""name"": ""Arrows"",
                     ""id"": ""de9ce343-76b6-4185-8a23-2b4fa4a8e81d"",
-                    ""path"": ""2DVector"",
+                    ""path"": ""2DVector(mode=2)"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -135,7 +135,7 @@ public class @InputMaster : IInputActionCollection, IDisposable
                 {
                     ""name"": ""WASD"",
                     ""id"": ""de5cda32-2893-4224-83f1-74c416ec4a25"",
-                    ""path"": ""2DVector"",
+                    ""path"": ""2DVector(mode=2)"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -298,61 +298,6 @@ public class @InputMaster : IInputActionCollection, IDisposable
                     ""isPartOfComposite"": true
                 },
                 {
-                    ""name"": ""ZQSD"",
-                    ""id"": ""eeda9e5c-60f3-4ef8-8d2e-9a05676b94c1"",
-                    ""path"": ""2DVector"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Movement"",
-                    ""isComposite"": true,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": ""up"",
-                    ""id"": ""5775225a-9ce9-4b6c-aa3d-8e4a66945f75"",
-                    ""path"": ""<Keyboard>/z"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard And Mouse"",
-                    ""action"": ""Movement"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""down"",
-                    ""id"": ""6ad922fc-d3e6-4e36-aaac-56cdbd1c8003"",
-                    ""path"": ""<Keyboard>/s"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard And Mouse"",
-                    ""action"": ""Movement"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""left"",
-                    ""id"": ""e8ba7e59-6a17-4864-badb-1cfb8af44df8"",
-                    ""path"": ""<Keyboard>/q"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard And Mouse"",
-                    ""action"": ""Movement"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""right"",
-                    ""id"": ""1bbc37f4-212a-429b-9703-88fc964704c2"",
-                    ""path"": ""<Keyboard>/d"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard And Mouse"",
-                    ""action"": ""Movement"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
                     ""name"": """",
                     ""id"": ""e6e7a588-f336-4f06-b4e1-9f464a98b566"",
                     ""path"": ""<Keyboard>/x"",
@@ -389,7 +334,7 @@ public class @InputMaster : IInputActionCollection, IDisposable
                     ""interactions"": """"
                 },
                 {
-                    ""name"": ""Checkpoint"",
+                    ""name"": ""FirstCheckpoint"",
                     ""type"": ""Button"",
                     ""id"": ""7285c91b-0bfe-4a88-bece-359ac013f5f2"",
                     ""expectedControlType"": ""Button"",
@@ -411,6 +356,14 @@ public class @InputMaster : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""SecondCheckpoint"",
+                    ""type"": ""Button"",
+                    ""id"": ""79970294-2ded-4498-b776-56f10c2b6e3a"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -428,11 +381,11 @@ public class @InputMaster : IInputActionCollection, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""7515d43e-3665-4932-bf82-c07a1b42b662"",
-                    ""path"": ""<Keyboard>/u"",
+                    ""path"": ""<Keyboard>/1"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Checkpoint"",
+                    ""groups"": ""Keyboard And Mouse"",
+                    ""action"": ""FirstCheckpoint"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -455,6 +408,17 @@ public class @InputMaster : IInputActionCollection, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""SlowMo"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""904b591f-cd8b-4d7f-9195-c46d586a1f7f"",
+                    ""path"": ""<Keyboard>/2"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard And Mouse"",
+                    ""action"": ""SecondCheckpoint"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -499,9 +463,10 @@ public class @InputMaster : IInputActionCollection, IDisposable
         // GameController
         m_GameController = asset.FindActionMap("GameController", throwIfNotFound: true);
         m_GameController_Restart = m_GameController.FindAction("Restart", throwIfNotFound: true);
-        m_GameController_Checkpoint = m_GameController.FindAction("Checkpoint", throwIfNotFound: true);
+        m_GameController_FirstCheckpoint = m_GameController.FindAction("FirstCheckpoint", throwIfNotFound: true);
         m_GameController_Quit = m_GameController.FindAction("Quit", throwIfNotFound: true);
         m_GameController_SlowMo = m_GameController.FindAction("SlowMo", throwIfNotFound: true);
+        m_GameController_SecondCheckpoint = m_GameController.FindAction("SecondCheckpoint", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -601,17 +566,19 @@ public class @InputMaster : IInputActionCollection, IDisposable
     private readonly InputActionMap m_GameController;
     private IGameControllerActions m_GameControllerActionsCallbackInterface;
     private readonly InputAction m_GameController_Restart;
-    private readonly InputAction m_GameController_Checkpoint;
+    private readonly InputAction m_GameController_FirstCheckpoint;
     private readonly InputAction m_GameController_Quit;
     private readonly InputAction m_GameController_SlowMo;
+    private readonly InputAction m_GameController_SecondCheckpoint;
     public struct GameControllerActions
     {
         private @InputMaster m_Wrapper;
         public GameControllerActions(@InputMaster wrapper) { m_Wrapper = wrapper; }
         public InputAction @Restart => m_Wrapper.m_GameController_Restart;
-        public InputAction @Checkpoint => m_Wrapper.m_GameController_Checkpoint;
+        public InputAction @FirstCheckpoint => m_Wrapper.m_GameController_FirstCheckpoint;
         public InputAction @Quit => m_Wrapper.m_GameController_Quit;
         public InputAction @SlowMo => m_Wrapper.m_GameController_SlowMo;
+        public InputAction @SecondCheckpoint => m_Wrapper.m_GameController_SecondCheckpoint;
         public InputActionMap Get() { return m_Wrapper.m_GameController; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -624,15 +591,18 @@ public class @InputMaster : IInputActionCollection, IDisposable
                 @Restart.started -= m_Wrapper.m_GameControllerActionsCallbackInterface.OnRestart;
                 @Restart.performed -= m_Wrapper.m_GameControllerActionsCallbackInterface.OnRestart;
                 @Restart.canceled -= m_Wrapper.m_GameControllerActionsCallbackInterface.OnRestart;
-                @Checkpoint.started -= m_Wrapper.m_GameControllerActionsCallbackInterface.OnCheckpoint;
-                @Checkpoint.performed -= m_Wrapper.m_GameControllerActionsCallbackInterface.OnCheckpoint;
-                @Checkpoint.canceled -= m_Wrapper.m_GameControllerActionsCallbackInterface.OnCheckpoint;
+                @FirstCheckpoint.started -= m_Wrapper.m_GameControllerActionsCallbackInterface.OnFirstCheckpoint;
+                @FirstCheckpoint.performed -= m_Wrapper.m_GameControllerActionsCallbackInterface.OnFirstCheckpoint;
+                @FirstCheckpoint.canceled -= m_Wrapper.m_GameControllerActionsCallbackInterface.OnFirstCheckpoint;
                 @Quit.started -= m_Wrapper.m_GameControllerActionsCallbackInterface.OnQuit;
                 @Quit.performed -= m_Wrapper.m_GameControllerActionsCallbackInterface.OnQuit;
                 @Quit.canceled -= m_Wrapper.m_GameControllerActionsCallbackInterface.OnQuit;
                 @SlowMo.started -= m_Wrapper.m_GameControllerActionsCallbackInterface.OnSlowMo;
                 @SlowMo.performed -= m_Wrapper.m_GameControllerActionsCallbackInterface.OnSlowMo;
                 @SlowMo.canceled -= m_Wrapper.m_GameControllerActionsCallbackInterface.OnSlowMo;
+                @SecondCheckpoint.started -= m_Wrapper.m_GameControllerActionsCallbackInterface.OnSecondCheckpoint;
+                @SecondCheckpoint.performed -= m_Wrapper.m_GameControllerActionsCallbackInterface.OnSecondCheckpoint;
+                @SecondCheckpoint.canceled -= m_Wrapper.m_GameControllerActionsCallbackInterface.OnSecondCheckpoint;
             }
             m_Wrapper.m_GameControllerActionsCallbackInterface = instance;
             if (instance != null)
@@ -640,15 +610,18 @@ public class @InputMaster : IInputActionCollection, IDisposable
                 @Restart.started += instance.OnRestart;
                 @Restart.performed += instance.OnRestart;
                 @Restart.canceled += instance.OnRestart;
-                @Checkpoint.started += instance.OnCheckpoint;
-                @Checkpoint.performed += instance.OnCheckpoint;
-                @Checkpoint.canceled += instance.OnCheckpoint;
+                @FirstCheckpoint.started += instance.OnFirstCheckpoint;
+                @FirstCheckpoint.performed += instance.OnFirstCheckpoint;
+                @FirstCheckpoint.canceled += instance.OnFirstCheckpoint;
                 @Quit.started += instance.OnQuit;
                 @Quit.performed += instance.OnQuit;
                 @Quit.canceled += instance.OnQuit;
                 @SlowMo.started += instance.OnSlowMo;
                 @SlowMo.performed += instance.OnSlowMo;
                 @SlowMo.canceled += instance.OnSlowMo;
+                @SecondCheckpoint.started += instance.OnSecondCheckpoint;
+                @SecondCheckpoint.performed += instance.OnSecondCheckpoint;
+                @SecondCheckpoint.canceled += instance.OnSecondCheckpoint;
             }
         }
     }
@@ -680,8 +653,9 @@ public class @InputMaster : IInputActionCollection, IDisposable
     public interface IGameControllerActions
     {
         void OnRestart(InputAction.CallbackContext context);
-        void OnCheckpoint(InputAction.CallbackContext context);
+        void OnFirstCheckpoint(InputAction.CallbackContext context);
         void OnQuit(InputAction.CallbackContext context);
         void OnSlowMo(InputAction.CallbackContext context);
+        void OnSecondCheckpoint(InputAction.CallbackContext context);
     }
 }

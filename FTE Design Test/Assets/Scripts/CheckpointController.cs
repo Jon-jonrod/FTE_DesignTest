@@ -7,7 +7,8 @@ using UnityEngine.SceneManagement;
 public class CheckpointController : MonoBehaviour
 {
     private CinemachineVirtualCamera currentCam;
-    public CinemachineVirtualCamera firstCamera, cameraCheckpoint;
+    public CinemachineVirtualCamera firstCamera;
+    //public CinemachineVirtualCamera[] camerasCheckpoint;
     private CinemachineVirtualCamera tempCam;
 
     private CharacterControllerScript characterControllerScript;
@@ -15,7 +16,7 @@ public class CheckpointController : MonoBehaviour
     private int numCheckpoint=0;
 
     private RespawnController charaRespawnController;
-    public Transform spawnCheckpoint;
+    //public Transform[] spawnsCheckpoint;
 
     //Input
     InputMaster controls;
@@ -29,7 +30,8 @@ public class CheckpointController : MonoBehaviour
 
         controls = characterControllerScript.getControls();
         controls.GameController.Restart.performed += context => Restart();
-        controls.GameController.Checkpoint.performed += context => GoToCheckpoint();
+        controls.GameController.FirstCheckpoint.performed += context => GoToCheckpoint(0);
+        controls.GameController.SecondCheckpoint.performed += context => GoToCheckpoint(1);
         controls.GameController.Quit.performed += context => Exit();
         controls.GameController.SlowMo.performed += context => SlowMo();
 
@@ -84,10 +86,26 @@ public class CheckpointController : MonoBehaviour
         Application.Quit();
     }
 
-    void GoToCheckpoint()
+    void GoToCheckpoint(int numcp=-1)
     {
-        currentCam = cameraCheckpoint;
-        charaRespawnController.SetNewSpawn(spawnCheckpoint.position);
-        characterControllerScript.Death();
+       
+        if (numcp != -1)
+            numCheckpoint = numcp;
+
+        Checkpoint checkpointScript=null;
+        foreach (GameObject obj in GameObject.FindGameObjectsWithTag("Checkpoint"))
+        {
+            if (obj.GetComponent<Checkpoint>().numCheckpoint == numCheckpoint)
+                checkpointScript = obj.GetComponent<Checkpoint>();
+        }
+
+        if (checkpointScript != null)
+        {
+            currentCam = checkpointScript.activeCamera;
+            //camerasCheckpoint[numCheckpoint];
+            charaRespawnController.SetNewSpawn(checkpointScript.spawnPos.position);
+            //charaRespawnController.SetNewSpawn(spawnsCheckpoint[numCheckpoint].position);
+            characterControllerScript.Death();
+        }
     }
 }

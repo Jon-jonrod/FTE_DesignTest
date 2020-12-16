@@ -6,7 +6,6 @@ public class BossChaseController : MonoBehaviour
 {
     public GameObject[] wayPoints;
     int current = 0;
-    float rotSpeed=2;
     public float speed;
     float radiusDetection = 0.5f;
     bool moving = false;

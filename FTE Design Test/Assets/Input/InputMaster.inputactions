@@ -67,7 +67,7 @@
                 {
                     "name": "Arrows",
                     "id": "de9ce343-76b6-4185-8a23-2b4fa4a8e81d",
-                    "path": "2DVector",
+                    "path": "2DVector(mode=2)",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -122,7 +122,7 @@
                 {
                     "name": "WASD",
                     "id": "de5cda32-2893-4224-83f1-74c416ec4a25",
-                    "path": "2DVector",
+                    "path": "2DVector(mode=2)",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -285,61 +285,6 @@
                     "isPartOfComposite": true
                 },
                 {
-                    "name": "ZQSD",
-                    "id": "eeda9e5c-60f3-4ef8-8d2e-9a05676b94c1",
-                    "path": "2DVector",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Movement",
-                    "isComposite": true,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "up",
-                    "id": "5775225a-9ce9-4b6c-aa3d-8e4a66945f75",
-                    "path": "<Keyboard>/z",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard And Mouse",
-                    "action": "Movement",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "down",
-                    "id": "6ad922fc-d3e6-4e36-aaac-56cdbd1c8003",
-                    "path": "<Keyboard>/s",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard And Mouse",
-                    "action": "Movement",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "left",
-                    "id": "e8ba7e59-6a17-4864-badb-1cfb8af44df8",
-                    "path": "<Keyboard>/q",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard And Mouse",
-                    "action": "Movement",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "right",
-                    "id": "1bbc37f4-212a-429b-9703-88fc964704c2",
-                    "path": "<Keyboard>/d",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard And Mouse",
-                    "action": "Movement",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
                     "name": "",
                     "id": "e6e7a588-f336-4f06-b4e1-9f464a98b566",
                     "path": "<Keyboard>/x",
@@ -376,7 +321,7 @@
                     "interactions": ""
                 },
                 {
-                    "name": "Checkpoint",
+                    "name": "FirstCheckpoint",
                     "type": "Button",
                     "id": "7285c91b-0bfe-4a88-bece-359ac013f5f2",
                     "expectedControlType": "Button",
@@ -398,6 +343,14 @@
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
+                },
+                {
+                    "name": "SecondCheckpoint",
+                    "type": "Button",
+                    "id": "79970294-2ded-4498-b776-56f10c2b6e3a",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
                 }
             ],
             "bindings": [
@@ -415,11 +368,11 @@
                 {
                     "name": "",
                     "id": "7515d43e-3665-4932-bf82-c07a1b42b662",
-                    "path": "<Keyboard>/u",
+                    "path": "<Keyboard>/1",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
-                    "action": "Checkpoint",
+                    "groups": "Keyboard And Mouse",
+                    "action": "FirstCheckpoint",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -442,6 +395,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "SlowMo",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "904b591f-cd8b-4d7f-9195-c46d586a1f7f",
+                    "path": "<Keyboard>/2",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard And Mouse",
+                    "action": "SecondCheckpoint",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

@@ -8,8 +8,8 @@ public class RespawnController : MonoBehaviour
     Vector3 spawnPosition;
     Quaternion spawnRotation;
 
-    public Vector3 alternativePos;
-    public bool useAlternativePos=false;
+    //public Vector3 alternativePos;
+    //public bool useAlternativePos=false;
 
     void Awake()
     {
@@ -21,8 +21,8 @@ public class RespawnController : MonoBehaviour
     public void OnRespawn()
     {
        
-        if (useAlternativePos)
-            spawnPosition = alternativePos;
+        //if (useAlternativePos)
+            //spawnPosition = alternativePos;
         transform.localPosition = spawnPosition;
         transform.localRotation = spawnRotation;
         if (name == "BadGuy")
@@ -42,4 +42,5 @@ public class RespawnController : MonoBehaviour
         spawnPosition = pos;
         spawnRotation = rot;
     }
+
 }
