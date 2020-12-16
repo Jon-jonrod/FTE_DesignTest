@@ -4,6 +4,10 @@ using UnityEngine;
 using Cinemachine;
 using UnityEngine.SceneManagement;
 
+/// <summary>
+/// Controller of all the checkpoints in the game. It'll know at which checkpoint we're at, set the camera and call the death function if the player chooses a checkpoint
+/// I put some general functions in here as well, like slowmotion, quit the application and restart the level.
+/// </summary>
 public class CheckpointController : MonoBehaviour
 {
     private CinemachineVirtualCamera currentCam;
@@ -39,6 +43,12 @@ public class CheckpointController : MonoBehaviour
         OnCharacterDeath();
     }
 
+
+    /// <summary>
+    /// When a player enters a checkpoint, we set the new cameras
+    /// </summary>
+    /// <param name="numCheckpointPassed"></param>
+    /// <param name="activeCamera"></param>
     public void NewCheckpoint(int numCheckpointPassed, CinemachineVirtualCamera activeCamera = null)
     {
         numCheckpoint=numCheckpointPassed;
@@ -48,6 +58,9 @@ public class CheckpointController : MonoBehaviour
         currentCam = activeCamera;
     }
 
+    /// <summary>
+    /// Function called when the player is dead, we reset all cameras and up the priority of the main used for the checkpoint
+    /// </summary>
     void OnCharacterDeath()
     {
         foreach (GameObject cam in GameObject.FindGameObjectsWithTag("VirtualCamera"))
@@ -61,31 +74,17 @@ public class CheckpointController : MonoBehaviour
         StartCoroutine(WaitCam(tempCam, 0.02f));
        
     }
-
-    public void SlowMo()
-    {
-        if (Time.timeScale == 1)
-            Time.timeScale = 0.1f;
-        else
-            Time.timeScale = 1;
-    }
-
     IEnumerator WaitCam(CinemachineVirtualCamera cam, float waitTime = 0.02f)
     {
         yield return new WaitForSeconds(waitTime);
         cam.Priority = 20;
     }
 
-    public void Restart()
-    {
-        SceneManager.LoadScene("Level");
-    }
 
-    public void Exit()
-    {
-        Application.Quit();
-    }
-
+    /// <summary>
+    /// When the input for the checkpoint is triggered, we call the "death" function, and set the camera.
+    /// </summary>
+    /// <param name="numcp"></param>
     void GoToCheckpoint(int numcp=-1)
     {
        
@@ -102,10 +101,28 @@ public class CheckpointController : MonoBehaviour
         if (checkpointScript != null)
         {
             currentCam = checkpointScript.activeCamera;
-            //camerasCheckpoint[numCheckpoint];
             charaRespawnController.SetNewSpawn(checkpointScript.spawnPos.position);
-            //charaRespawnController.SetNewSpawn(spawnsCheckpoint[numCheckpoint].position);
             characterControllerScript.Death();
         }
+    }
+
+
+    //A few functions that controls the game
+    public void SlowMo()
+    {
+        if (Time.timeScale == 1)
+            Time.timeScale = 0.1f;
+        else
+            Time.timeScale = 1;
+    }
+
+    public void Restart()
+    {
+        SceneManager.LoadScene("Level");
+    }
+
+    public void Exit()
+    {
+        Application.Quit();
     }
 }

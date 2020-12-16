@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Script used to play the note when the player activate a piano key
+/// </summary>
 public class ButtonMusic : MonoBehaviour
 {   
 

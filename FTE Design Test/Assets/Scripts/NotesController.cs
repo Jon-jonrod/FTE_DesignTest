@@ -2,6 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
+/// <summary>
+/// Script used for the piano puzzle, it checks if the player enters the notes in the right order
+/// </summary>
 public class NotesController : MonoBehaviour
 {
     public int goodNoteCounter = 0;

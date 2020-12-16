@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// This script is the controller for the Boss Chaser. I just used a few waypoints for this one as an AI would have been too much for a prototype
+/// </summary>
 public class BossChaseController : MonoBehaviour
 {
     public GameObject[] wayPoints;
@@ -24,8 +27,6 @@ public class BossChaseController : MonoBehaviour
         if (moving)
         {
             transform.position = Vector3.MoveTowards(transform.position, wayPoints[current].transform.position, Time.deltaTime * speed);
-
-            //newDirection = Vector3.RotateTowards(transform.forward, wayPoints[current].transform.position - transform.position, rotSpeed * Time.deltaTime, 0.0f);
             newRotation = Quaternion.LookRotation((wayPoints[current].transform.position - transform.position).normalized);
             transform.rotation = Quaternion.Slerp(transform.rotation, newRotation, Time.deltaTime * speed);
         }

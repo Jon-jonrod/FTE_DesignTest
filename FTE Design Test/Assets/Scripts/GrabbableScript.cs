@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Script used grab object. It uses physics so it can have some weird behaviour. 
+/// </summary>
 public class GrabbableScript : MonoBehaviour
 {
     private bool isGrabbed;
@@ -24,11 +27,12 @@ public class GrabbableScript : MonoBehaviour
     {
         if (isGrabbed)
         {
-            
-            distance = Vector3.Distance(transform.position, playerTransform.position);
-          
+            //We don't want the object to move when it's grabbed by the player
             myRigidbody.velocity = Vector3.zero;
             myRigidbody.angularVelocity = Vector3.zero; if (distance >= maxDistanceGrabbed)
+
+            //if the player is too far away from the object, then the object will be dropped
+            distance = Vector3.Distance(transform.position, playerTransform.position);          
             if (distance >= maxDistanceGrabbed)
             {
                 Drop();

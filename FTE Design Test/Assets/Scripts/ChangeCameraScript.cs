@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
 
+/// <summary>
+/// Script used to change the live camera in the cinematicBrain component of the main camera
+/// </summary>
 public class ChangeCameraScript : MonoBehaviour
 {
     public CinemachineVirtualCamera camera1, camera2;

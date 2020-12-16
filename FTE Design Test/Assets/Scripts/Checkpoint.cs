@@ -4,7 +4,9 @@ using UnityEngine;
 using Cinemachine;
 using UnityEngine.Playables;
 
-
+/// <summary>
+/// Script used to trigger a checkpoint in the level as well as containing necessaries informations for the checkpoint : cutscenes, spawnPosition, camera
+/// </summary>
 public class Checkpoint : MonoBehaviour
 {
     public CinemachineVirtualCamera activeCamera;
@@ -23,12 +25,13 @@ public class Checkpoint : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+
+        //For each checkpoint, the designer has to specify which cutscenes are impacted by which checkpoint. He can use the public variable "cutsceneToAffect" to do so.
         checkpointController = GameObject.Find("CheckpointController").GetComponent<CheckpointController>();
         cutsceneToReplay = new StartCutsceneScript[cutsceneToAffect.Length];
         cutsceneToStops = new PlayableDirector[cutsceneToAffect.Length];
         for (int i=0; i<cutsceneToAffect.Length; i++)
         {
-            Debug.Log(i);
             cutsceneToReplay[i] = cutsceneToAffect[i].GetComponent<StartCutsceneScript>();
             cutsceneToStops[i] = cutsceneToAffect[i].GetComponent<PlayableDirector>();
         }
@@ -38,14 +41,10 @@ public class Checkpoint : MonoBehaviour
         characterScript.onDeath += OnCharacterDeath;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     private void OnTriggerEnter(Collider other)
     {
+        //If the player enters, we set the new checkpoint
         if (other.tag == "Player")
         {
             RespawnController charaRespawn = other.GetComponent<RespawnController>();
@@ -54,6 +53,7 @@ public class Checkpoint : MonoBehaviour
         }
     }
 
+    //When restarting, we have to reset the cutscenes
     void OnCharacterDeath()
     {
         for (int i=0; i<cutsceneToAffect.Length; i++)

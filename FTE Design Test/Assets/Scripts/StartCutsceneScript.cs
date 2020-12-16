@@ -3,8 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Playables;
 
+/// <summary>
+/// Script used to start a cutscene when a player enters the trigger
+/// </summary>
 public class StartCutsceneScript : MonoBehaviour
 {
+
     private PlayableDirector timeline;
     private bool played = false;
 
@@ -30,7 +34,6 @@ public class StartCutsceneScript : MonoBehaviour
 
     public void Reset()
     {
-        Debug.Log(name);
         played = false;
     }
 

@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Singleton containing all the sounds in the level
+/// </summary>
 public class SoundsLibrary : MonoBehaviour
 {
     public static SoundsLibrary library;

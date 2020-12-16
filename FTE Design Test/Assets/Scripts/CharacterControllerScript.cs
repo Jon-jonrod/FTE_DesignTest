@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
 
+/// <summary>
+/// Script used for controlling the character movement and behaviour
+/// </summary>
 public class CharacterControllerScript : MonoBehaviour
 {
 
@@ -24,13 +27,7 @@ public class CharacterControllerScript : MonoBehaviour
     public float groundDistance = 0.4f;
     bool isGrounded;
     public float jumpHeight = 3f;
-
-    //Variables for Button
-    bool isOnButton;
-    public LayerMask buttonMask;
     
-
-
     //Variables for Grab
     public bool grabbed;
     RaycastHit hit;
@@ -61,6 +58,7 @@ public class CharacterControllerScript : MonoBehaviour
     {
         if (!dead)
         {
+            //Movement of the character
             isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
             if (isGrounded)
             {
@@ -84,8 +82,9 @@ public class CharacterControllerScript : MonoBehaviour
 
             }
 
-            Debug.DrawRay(originGrab.transform.position, transform.TransformDirection(Vector3.forward) * distance, Color.yellow);
+            //Debug.DrawRay(originGrab.transform.position, transform.TransformDirection(Vector3.forward) * distance, Color.yellow);
 
+            //Gravity applied on the character
             velocity.y += gravity * Time.deltaTime;
             controller.Move(velocity * Time.deltaTime);
 
@@ -100,6 +99,7 @@ public class CharacterControllerScript : MonoBehaviour
 
     void Grab()
     {
+        //Using raycast to detect if objects are in the right position to be grabbed
         if (!grabbed)
         {
             if (Physics.Raycast(originGrab.transform.position, transform.TransformDirection(Vector3.forward), out hit, distance, grabbableMask) ||
